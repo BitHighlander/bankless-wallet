@@ -6,14 +6,14 @@
 let TAG = ' | API | '
 
 const pjson = require('../../package.json');
-const log = require('@bithighlander/loggerdog-client')()
+const log = require('@pioneer-platform/loggerdog')()
 const {subscriber, publisher, redis} = require('@pioneer-platform/default-redis')
 
 //rest-ts
 import { Body, Controller, Get, Post, Route, Tags, SuccessResponse, Query, Request, Response, Header } from 'tsoa';
-import * as express from 'express';
-let pioneer = require('../wallet')
-pioneer.init()
+
+// let wallet = require('../wallet')
+// wallet.init()
 
 //types
 interface Error {
@@ -39,6 +39,7 @@ export class ApiError extends Error {
 }
 
 //route
+@Tags('Status Endpoints')
 @Route('')
 export class IndexController extends Controller {
 
@@ -74,52 +75,52 @@ export class IndexController extends Controller {
         }
     }
 
-    /*
-        get Address
-    */
-
-    @Get('/address')
-    public async address() {
-        let tag = TAG + " | address | "
-        try{
-            let address = await pioneer.getAddress()
-            log.info(tag,"address: ",address)
-            return({address})
-        }catch(e){
-            let errorResp:Error = {
-                success:false,
-                tag,
-                e
-            }
-            log.error(tag,"e: ",{errorResp})
-            throw new ApiError("error",503,"error: "+e.toString());
-        }
-    }
-
-    /*
-        send to address
-    */
-
-    @Post('/sendToAddress')
-    public async sendToAddress(@Body() body: any) {
-        let tag = TAG + " | sendToAddress | "
-        try{
-            log.info(tag,"body: ",body)
-            let address = body.address
-            let amount = body.amount
-            if(!address) throw Error("Missing address!")
-            if(!amount) throw Error("Missing amount!")
-            let result = await pioneer.sendToAddress(address,amount)
-            log.info(tag,"result: ",result)
-            return({result})
-        }catch(e){
-            let errorResp:Error = {
-                success:false,
-                tag,
-                e
-            }
-            log.error(tag,"e: ",{errorResp})
-            throw new ApiError("error",503,"error: "+e.toString());
-        }
-    }
+    // /*
+    //     get Address
+    // */
+    //
+    // @Get('/address')
+    // public async address() {
+    //     let tag = TAG + " | address | "
+    //     try{
+    //         let address = await wallet.getAddress()
+    //         log.info(tag,"address: ",address)
+    //         return({address})
+    //     }catch(e){
+    //         let errorResp:Error = {
+    //             success:false,
+    //             tag,
+    //             e
+    //         }
+    //         log.error(tag,"e: ",{errorResp})
+    //         throw new ApiError("error",503,"error: "+e.toString());
+    //     }
+    // }
+    //
+    // /*
+    //     send to address
+    // */
+    //
+    // @Post('/sendToAddress')
+    // public async sendToAddress(@Body() body: any) {
+    //     let tag = TAG + " | sendToAddress | "
+    //     try{
+    //         log.info(tag,"body: ",body)
+    //         let address = body.address
+    //         let amount = body.amount
+    //         if(!address) throw Error("Missing address!")
+    //         if(!amount) throw Error("Missing amount!")
+    //         let result = await wallet.sendToAddress(address,amount)
+    //         log.info(tag,"result: ",result)
+    //         return({result})
+    //     }catch(e){
+    //         let errorResp:Error = {
+    //             success:false,
+    //             tag,
+    //             e
+    //         }
+    //         log.error(tag,"e: ",{errorResp})
+    //         throw new ApiError("error",503,"error: "+e.toString());
+    //     }
+    // }
 }

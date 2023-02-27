@@ -8,21 +8,17 @@ require('dotenv').config({path:"./../../../../.env"})
 
 const pjson = require('../package.json');
 const TAG = " | "+ pjson.name +" | "
-const log = require('@bithighlander/loggerdog-client')()
+const log = require('@pioneer-platform/loggerdog')()
 const {subscriber, publisher, redis} = require('@pioneer-platform/default-redis')
 var cors = require('cors')
 import * as bodyParser from 'body-parser';
-import * as express from 'express';
+const express = require('express')
 import * as methodOverride from 'method-override';
 
 // @ts-ignore
 import { RegisterRoutes } from './routes/routes';  // here
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../api/dist/swagger.json')
-
-//Rate limiter options
-//https://github.com/animir/node-rate-limiter-flexible/wiki/Overall-example#create-simple-rate-limiter-and-consume-points-on-entry-point
-const { RateLimiterRedis } = require('rate-limiter-flexible');
 
 const app = express();
 const server = require('http').Server(app);
@@ -42,7 +38,7 @@ var corsOptions = {
 app.use(cors(corsOptions))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(methodOverride());
+// app.use(methodOverride());
 
 //socket
 let SOCKET_MAX_CONNECTIONS = parseInt(process.env["SOCKET_MAX_CONNECTIONS"]) || 20
