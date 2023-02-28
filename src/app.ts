@@ -109,6 +109,10 @@ app.use('/info', (req: Request, res: Response): void => {
     res.send(STATUS);
 });
 
+app.use('/balances', (req: Request, res: Response): void => {
+    res.send(APP.balances);
+});
+
 app.use('/balance', (req: Request, res: Response): void => {
     res.send(APP.balances.filter((e:any) => e.symbol === ASSET));
 });
@@ -156,10 +160,11 @@ let sendToAddress = async function(address:string,amount:string){
 
 app.post('/sendToAddress', async (req, res) => {
     let data = req.body;
-    console.log(JSON.stringify(data))
+    console.log("input: ",JSON.stringify(data))
     if(!data.address) throw Error("Address required!")
     if(!data.amount) throw Error("Amount required!")
-    let result = await sendToAddress(data.address,data.amount)
+    // let result = await sendToAddress(data.address,data.amount)
+    let result = {txid:"fakeTxidBro"}
     res.send(result);
 })
 
