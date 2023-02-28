@@ -1,31 +1,26 @@
 {
-  "name": "service-1",
+  "name": "express-typescript",
   "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "clean": "rm -R dist api node_modules ./src-api/routes",
-    "npm": "npm i",
-    "build:web": "echo lol",
-    "build:routes": "mkdir -p src-api/routes && tsoa routes --configuration tsoa.json",
-    "build:swagger": "mkdir -p api && mkdir -p api/dist && tsoa swagger --configuration tsoa.json",
-    "build:ts": "tsc -p src-api",
-    "build:all": "npm run build:routes && npm run build:swagger && npm run build:ts && npm run build:web",
-    "start": "node dist/main.js"
+    "yarn": "yarn",
+    "start": "npx tsc && node build/app.js"
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "@keepkey/keepkey-sdk": "^0.2.26",
-    "@pioneer-platform/default-redis": "latest",
     "@pioneer-platform/loggerdog": "^8.1.18",
-    "@pioneer-platform/redis-queue": "^8.1.18",
-    "@pioneer-sdk/sdk": "^1.1.61",
-    "@types/node": "^12.12.44",
-    "body-parser": "^1.19.0",
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "method-override": "^3.0.0",
-    "rate-limiter-flexible": "^2.1.7",
-    "short-uuid": "^4.2.2",
-    "socket.io": "^2.3.0",
-    "swagger-ui-express": "^4.1.4",
-    "tsoa": "^3.2.1"
+    "@pioneer-sdk/sdk": "1.1.64",
+    "@shapeshiftoss/hdwallet-core": "^1.45.0",
+    "@shapeshiftoss/hdwallet-native": "^1.45.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.1",
+    "short-uuid": "^4.2.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^18.0.0",
+    "typescript": "^4.7.4"
   }
 }
